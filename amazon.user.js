@@ -7,7 +7,7 @@
 // @updateURL   https://github.com/blackholeantsavannah/utils/raw/main/amazon.user.js
 // @downloadURL https://github.com/blackholeantsavannah/utils/raw/main/amazon.user.js
 // @include     *.amazon.com/*
-// @require     https://code.jquery.com/jquery-2.2.4.min.js
+// @require     https://code.jquery.com/jquery-3.6.0.min.js
 // @grant       none
 // ==/UserScript==
 
