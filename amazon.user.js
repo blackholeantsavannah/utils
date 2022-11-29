@@ -16,6 +16,7 @@ var jq = jQuery.noConflict();
 //fixed properties
 var offer_listing_prefix = "https://www.amazon.com/gp/offer-listing/";
 var ccc_prefix = "https://www.camelcamelcamel.com/product/";
+var keepa_prefix = "https://keepa.com/#!product/1-";
 var fakespot_prefix = "https://www.fakespot.com/product/";
 
 var item_pat = /dp\/(.*?)(\/.*)?$/;
@@ -112,6 +113,16 @@ function main() {
       }
   )
 
+  var keepa_link_node = jq(
+      '<a/>',
+      {
+          id: 'keepa-link',
+          class: 'a-link-normal',
+          href: keepa_url,
+          html: 'Show keepa page'
+      }
+  )
+
   var fakespot_link_node = jq(
       '<a/>',
       {
@@ -135,6 +146,7 @@ function main() {
 
   let next = append(listing_link_node, parent_node);
   next = append_with_break(ccc_link_node, next);
+  next = append_with_break(keepa_link_node, next);
   next = append_with_break(fakespot_link_node, next);
 
   jq('.image-swatch-button').each(
