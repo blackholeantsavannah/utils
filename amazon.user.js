@@ -18,8 +18,9 @@ var offer_listing_prefix = "https://www.amazon.com/gp/offer-listing/";
 var ccc_prefix = "https://www.camelcamelcamel.com/product/";
 var fakespot_prefix = "https://www.fakespot.com/product/";
 
-var item_pat = /dp\/(.*?)\/?$/;
+var item_pat = /dp\/(.*?)(\/.*)?$/;
 var item_pat2 = /gp\/product\/(.*?)[\/\?]/;
+var item_pat3 = /dp\/(.*?)\/?/;
 var name_process_pat = /[^\w\d]+/;
 
 
