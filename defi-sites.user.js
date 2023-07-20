@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Valid DeFi sites
-// @version     1.0
+// @version     1.1.0
 // @namespace   blackholeantsavannah
 // @author      blackholeantsavannah
 // @description Included on (somewhat) validated DeFi urls (DYOR)
@@ -17,5 +17,10 @@
 // @match       https://app.unrekt.net/*
 // @match       https://v2.unrekt.net/*
 // @match       https://trackbsc.com/*
+// @match       https://spookyswap.finance/*
+// @match       https://tomb.finance/*
+// @match       https://polygon.technology/*
+// @match       https://anyswap.exchange/*
+// @match       https://mithrilverse.io/*
 // @grant       none
 // ==/UserScript==
