@@ -20,7 +20,7 @@ var keepa_prefix = "https://keepa.com/#!product/1-";
 var fakespot_prefix = "https://www.fakespot.com/product/";
 
 var item_pat = /dp\/(.*?)(\/.*)?$/;
-var item_pat2 = /gp\/product\/(.*?)[\/\?]/;
+var item_pat2 = /gp\/product\/(.*?)[\/\?]?$/;
 var item_pat3 = /dp\/(.*?)\/?/;
 var name_process_pat = /[^\w\d]+/;
 
