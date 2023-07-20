@@ -18,7 +18,11 @@ $(document).ready(function(){
         }
     })
 
-    $('.originalPoster_post').each(function(){$(this).addClass('originalPoster_post--visible')});
+    if ($('#originalPostText').length > 0) {
+      $('#detailsDescription').css({'display': 'none'});
+      $('#originalPost').insertAfter($('#detailsDescription'));
+      $('#originalPostText').attr('id', 'originalPostText--visible');
+    }
 
     setInterval(
         function() {
