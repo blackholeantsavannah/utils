@@ -35,6 +35,7 @@ function waitForElm(selector) {
 
 
 handled_suffix = ' included'
+handled_item_attr = 'bhas-handled'
 currency_char = '$'
 currency_char_regex = '\\$'
 multi_item_cost_text = ' to '
@@ -56,96 +57,131 @@ function parseFloatToPrice(num) {
 
 
 function modPriceIncludeShippingSearch(idx, elem) {
-  price_elem = $(elem).find('.s-item__price');
   shipping_elem = $(elem).find('.s-item__logisticsCost');
 
   if ($(shipping_elem).length == 0) {
     shipping_elem = $(elem).find('span.s-item__freeXDays').find('span');
   }
 
-  price_elem_text = $(price_elem).text();
-  shipping_elem_text = $(shipping_elem).text();
+  price_elems = $(elem).find('.s-item__price');
 
-  shipping_cost = shipping_elem_text.replace('+', '').replace(' shipping', '');
+  $(price_elems).each(
+    function(j, price_elem) {
+      price_elem_text = $(price_elem).text();
+      shipping_elem_text = $(shipping_elem).text();
 
-  if (shipping_cost.includes(handled_suffix)) {
-    return
-  }
-  else if (shipping_cost.includes('Free')) {
-    $(shipping_elem).text(`${shipping_elem_text}${handled_suffix}`);
-  }
-  else {
-    shipping_cost = parsePriceToFloat(shipping_cost);
-    if (price_elem_text.includes(multi_item_cost_text)) {
-      [low_cost, high_cost] = price_elem_text.split(multi_item_cost_text);
-      low_cost = parsePriceToFloat(low_cost);
-      high_cost = parsePriceToFloat(high_cost);
+      shipping_cost = shipping_elem_text.replace('+', '').replace(' shipping', '');
 
-      new_low_cost = parseFloatToPrice(shipping_cost + low_cost);
-      new_high_cost = parseFloatToPrice(shipping_cost + high_cost);
+      if ($(price_elem).attr(handled_item_attr) != undefined) {
+        return
+      }
+      else if (shipping_cost.includes('Free')) {
+        $(shipping_elem).text(`${shipping_elem_text}${handled_suffix}`);
+      }
+      else {
+        shipping_cost = parsePriceToFloat(shipping_cost);
+        if (price_elem_text.includes(multi_item_cost_text)) {
+          [low_cost, high_cost] = price_elem_text.split(multi_item_cost_text);
+          low_cost = parsePriceToFloat(low_cost);
+          high_cost = parsePriceToFloat(high_cost);
 
-      total_cost = `${new_low_cost}${multi_item_cost_text}${new_high_cost}`;
+          new_low_cost = parseFloatToPrice(shipping_cost + low_cost);
+          new_high_cost = parseFloatToPrice(shipping_cost + high_cost);
+
+          total_cost = `${new_low_cost}${multi_item_cost_text}${new_high_cost}`;
+        }
+        else {
+          item_cost = parsePriceToFloat(price_elem_text);
+          total_cost = parseFloatToPrice(shipping_cost + item_cost);
+        }
+        $(price_elem).text(total_cost);
+        $(price_elem).attr(handled_item_attr, 1);
+        if (!$(shipping_elem).text().includes(handled_suffix)) {
+          $(shipping_elem).text(`${parseFloatToPrice(shipping_cost)} shipping${handled_suffix}`);
+        }
+      }
     }
-    else {
-      item_cost = parsePriceToFloat(price_elem_text);
-      total_cost = parseFloatToPrice(shipping_cost + item_cost);
-    }
-    $(price_elem).text(total_cost);
-    $(shipping_elem).text(`${parseFloatToPrice(shipping_cost)} shipping${handled_suffix}`);
-  }
+  )
 }
 
 function modPriceIncludeShippingDetail(idx, elem) {
-  multibuy_item_class = 'bhas-added';
+  multibuy_item_class_bid = 'bhas-added-bid';
+  multibuy_item_class_bin = 'bhas-added-bin';
 
-  price_elem = $(elem).find('span.ux-textspans')[0];
   shipping_elem = $('div.ux-labels-values--shipping').find('span.ux-textspans--BOLD');
 
-  price_elem_text = $(price_elem).text();
-  shipping_elem_text = $(shipping_elem).text();
+  // price_elem = $(elem).find('span.ux-textspans')[0];
 
-  shipping_cost = shipping_elem_text.replace('+', '').replace(' shipping', '');
-
-  if (shipping_cost.includes(handled_suffix) && !price_elem_text.includes('ea')) {
-    return
-  }
-  else if (shipping_cost.includes('Free')) {
-    $(shipping_elem).text(`${shipping_elem_text}${handled_suffix}`);
-  }
-  else {
-    shipping_cost = parsePriceToFloat(shipping_cost);
-    if (price_elem_text.includes(multi_item_cost_text)) {
-      [low_cost, high_cost] = price_elem_text.split(multi_item_cost_text);
-      low_cost = parsePriceToFloat(low_cost);
-      high_cost = parsePriceToFloat(high_cost);
-
-      new_low_cost = parseFloatToPrice(shipping_cost + low_cost);
-      new_high_cost = parseFloatToPrice(shipping_cost + high_cost);
-
-      total_cost = `${new_low_cost}${multi_item_cost_text}${new_high_cost}`;
+  function doPrice(price_elem) {
+    if ($(price_elem).length == 0) {
+      return
     }
-    else if (price_elem_text.includes('ea')) {
-      if ($(`.${multibuy_item_class}`).length > 0) {
-        return
-      }
+
+    price_elem = $(price_elem).find('span.ux-textspans')[0];
+    price_elem_text = $(price_elem).text();
+    shipping_elem_text = $(shipping_elem).text();
+
+    if ($(price_elem).attr(handled_item_attr) != undefined) {
+      return
+    }
+
+    if (price_elem_text.includes('ea')) {
       item_cost_each = parsePriceToFloat(price_elem_text.replace('/ea', ''));
       quantity = parseFloat($('#qtyTextBox').attr('value'));
 
+      if (shipping_elem_text.includes('Free')) {
+        shipping_cost = 0;
+      }
+      else {
+        shipping_cost = shipping_elem_text.replace('+', '').replace(' shipping', '');
+        shipping_cost = parsePriceToFloat(shipping_cost);
+      }
       total_cost = `${parseFloatToPrice(shipping_cost + item_cost_each * quantity)}/${quantity}`;
 
       old_price_elem = price_elem;
       price_elem = $(old_price_elem).clone();
-      $(price_elem).addClass(multibuy_item_class);
+      $(price_elem).attr(handled_item_attr, 1);
       $(price_elem).insertAfter(old_price_elem);
       $('<br>').insertAfter(old_price_elem);
     }
     else {
-      item_cost = parsePriceToFloat(price_elem_text);
-      total_cost = parseFloatToPrice(shipping_cost + item_cost);
+      // if ($(`.${handled_item_attr}`).length > 0) {
+      //   return
+      // }
+      if (shipping_elem_text.includes('Free')) {
+        $(shipping_elem).text(`${shipping_elem_text}${handled_suffix}`);
+        total_cost = price_elem_text;
+      }
+      else {
+        shipping_cost = shipping_elem_text.replace('+', '').replace(' shipping', '');
+        shipping_cost = parsePriceToFloat(shipping_cost);
+        if (price_elem_text.includes(multi_item_cost_text)) {
+          [low_cost, high_cost] = price_elem_text.split(multi_item_cost_text);
+          low_cost = parsePriceToFloat(low_cost);
+          high_cost = parsePriceToFloat(high_cost);
+
+          new_low_cost = parseFloatToPrice(shipping_cost + low_cost);
+          new_high_cost = parseFloatToPrice(shipping_cost + high_cost);
+
+          total_cost = `${new_low_cost}${multi_item_cost_text}${new_high_cost}`;
+        }
+        else {
+          item_cost = parsePriceToFloat(price_elem_text);
+          total_cost = parseFloatToPrice(shipping_cost + item_cost);
+        }
+      }
     }
     $(price_elem).text(total_cost);
-    $(shipping_elem).text(`${parseFloatToPrice(shipping_cost)} shipping${handled_suffix}`);
+    $(price_elem).attr(handled_item_attr, 1);
+    if (shipping_cost != 0 && !$(shipping_elem_text).includes(handled_suffix)) {
+      shipping_str = `${shipping_elem_text}${handled_suffix}`
+      $(shipping_elem).text(shipping_str);
+    }
   }
+
+  doPrice($('.x-bid-price__content'));
+  doPrice($('.x-bin-price__content'));
+
 }
 
 
