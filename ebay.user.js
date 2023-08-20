@@ -76,7 +76,9 @@ function modPriceIncludeShippingSearch(idx, elem) {
         return
       }
       else if (shipping_cost.includes('Free')) {
-        $(shipping_elem).text(`${shipping_elem_text}${handled_suffix}`);
+        if (!$(shipping_elem).text().includes(handled_suffix)) {
+          $(shipping_elem).text(`${shipping_elem_text}${handled_suffix}`);
+        }
       }
       else {
         shipping_cost = parsePriceToFloat(shipping_cost);
@@ -139,8 +141,8 @@ function modPriceIncludeShippingDetail(idx, elem) {
       total_cost = `${parseFloatToPrice(shipping_cost + item_cost_each * quantity)}/${quantity}`;
 
       old_price_elem = price_elem;
+      $(old_price_elem).attr(handled_item_attr, 1);
       price_elem = $(old_price_elem).clone();
-      $(price_elem).attr(handled_item_attr, 1);
       $(price_elem).insertAfter(old_price_elem);
       $('<br>').insertAfter(old_price_elem);
     }
