@@ -76,8 +76,9 @@ function modPriceIncludeShippingSearch(idx, elem) {
         return
       }
       else if (shipping_cost.includes('Free')) {
-        if (!$(shipping_elem).text().includes(handled_suffix)) {
+        if ($(shipping_elem).attr(handled_item_attr) == undefined) {
           $(shipping_elem).text(`${shipping_elem_text}${handled_suffix}`);
+          $(shipping_elem).attr(handled_item_attr, 1);
         }
       }
       else {
@@ -98,19 +99,20 @@ function modPriceIncludeShippingSearch(idx, elem) {
         }
         $(price_elem).text(total_cost);
         $(price_elem).attr(handled_item_attr, 1);
-        if (!$(shipping_elem).text().includes(handled_suffix)) {
-          $(shipping_elem).text(`${parseFloatToPrice(shipping_cost)} shipping${handled_suffix}`);
-        }
+      }
+      if ($(shipping_elem).attr(handled_item_attr) == undefined) {
+        $(shipping_elem).text(`${parseFloatToPrice(shipping_cost)} shipping${handled_suffix}`);
+        $(shipping_elem).attr(handled_item_attr, 1);
       }
     }
   )
 }
 
-function modPriceIncludeShippingDetail(idx, elem) {
+function modPriceIncludeShippingDetail() {
   multibuy_item_class_bid = 'bhas-added-bid';
   multibuy_item_class_bin = 'bhas-added-bin';
 
-  shipping_elem = $('div.ux-labels-values--shipping').find('span.ux-textspans--BOLD');
+  shipping_elem = $('div.ux-labels-values--shipping').find('span.ux-textspans--BOLD')[0];
 
   // price_elem = $(elem).find('span.ux-textspans')[0];
 
@@ -119,13 +121,13 @@ function modPriceIncludeShippingDetail(idx, elem) {
       return
     }
 
+    if ($(price_elem).find('span.ux-textspans[bhas-handled]').length > 0) {
+      return
+    }
+
     price_elem = $(price_elem).find('span.ux-textspans')[0];
     price_elem_text = $(price_elem).text();
     shipping_elem_text = $(shipping_elem).text();
-
-    if ($(price_elem).attr(handled_item_attr) != undefined) {
-      return
-    }
 
     if (price_elem_text.includes('ea')) {
       item_cost_each = parsePriceToFloat(price_elem_text.replace('/ea', ''));
@@ -141,8 +143,8 @@ function modPriceIncludeShippingDetail(idx, elem) {
       total_cost = `${parseFloatToPrice(shipping_cost + item_cost_each * quantity)}/${quantity}`;
 
       old_price_elem = price_elem;
-      $(old_price_elem).attr(handled_item_attr, 1);
       price_elem = $(old_price_elem).clone();
+      $(price_elem).attr(handled_item_attr, 1);
       $(price_elem).insertAfter(old_price_elem);
       $('<br>').insertAfter(old_price_elem);
     }
@@ -175,15 +177,15 @@ function modPriceIncludeShippingDetail(idx, elem) {
     }
     $(price_elem).text(total_cost);
     $(price_elem).attr(handled_item_attr, 1);
-    if (shipping_cost != 0 && !$(shipping_elem_text).includes(handled_suffix)) {
+    if ($(shipping_elem).attr(handled_item_attr) == undefined) {
       shipping_str = `${shipping_elem_text}${handled_suffix}`
+      $(shipping_elem).attr(handled_item_attr, 1);
       $(shipping_elem).text(shipping_str);
     }
   }
 
   doPrice($('.x-bid-price__content'));
   doPrice($('.x-bin-price__content'));
-
 }
 
 
@@ -193,9 +195,15 @@ window.addEventListener('load', function() {
   }
 
   function handleDetail() {
-    $(detail_page_selector).each(modPriceIncludeShippingDetail);
+    modPriceIncludeShippingDetail();
   }
 
-  waitForElm(search_page_selector).then(this.setInterval(handleSearch, 2000));
-  waitForElm(detail_page_selector).then(this.setInterval(handleDetail, 2000));
+  waitForElm(search_page_selector).then(handleSearch);
+  // waitForElm(search_page_selector).then(this.setInterval(handleSearch, 5000));
+  waitForElm(detail_page_selector).then(
+    function() {
+      this.setTimeout(handleDetail, 1000);
+      this.setInterval(handleDetail, 3000);
+    }
+  );
 }, false);
