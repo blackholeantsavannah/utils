@@ -47,7 +47,9 @@ var price_regex = new RegExp(`.*${currency_char_regex}`)
 
 
 function parsePriceToFloat(text) {
-  return parseFloat(text.replace(price_regex, ''));
+  text = text.replace(price_regex, '');
+  text = text.replace(',', '');
+  return parseFloat(text);
 }
 
 
