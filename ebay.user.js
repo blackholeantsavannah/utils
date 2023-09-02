@@ -77,6 +77,11 @@ function modPriceIncludeShippingSearch(idx, elem) {
       if ($(price_elem).attr(handled_item_attr) != undefined) {
         return
       }
+      else if (shipping_cost.includes('not specified')) {
+        console.log($(price_elem));
+        console.log('shipping unspecified');
+        return
+      }
       else if (shipping_cost.includes('Free')) {
         if ($(shipping_elem).attr(handled_item_attr) == undefined) {
           $(shipping_elem).text(`${shipping_elem_text}${handled_suffix}`);
