@@ -157,6 +157,9 @@ www.newyorker.com###signInContainer
 www.nytimes.com###gateway-content
 www.nytimes.com##.MAG_web_anon_all_monthly-sale-dock
 www.nytimes.com##.MAG_web_anon_new-journey-rollout
+www.parcelmonitor.com###popup-root
+www.parcelmonitor.com##.eFvgyj
+www.parcelmonitor.com##html:style(overflow: auto !important)
 www.paypal-community.com##.lia-in.ui-resizable
 www.paypal-community.com##.lia-panel-dialog-content-type-ajax
 www.paypal-community.com##.ui-widget-overlay
