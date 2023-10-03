@@ -7,11 +7,23 @@ askubuntu.com##.js-consent-banner
 athleta.gap.com##.product-card:has-text(Final Sale):nth-ancestor(1)
 athleta.gap.com##[title="SHOP GIRL SALE NOW"]:nth-ancestor(9)
 bananarepublic.gap.com##span[aria-label*=".97"]:upward(7)
+bensbargains.com###newsletter-main-content
+bensbargains.com###top-offers
+bensbargains.com##.emailSignupForm
 bscscan.com##.justify-content-center.d-flex
 cnnh.org##.sgpb-popup-dialog-main-div-wrapper
 cnnh.org##.sgpb-popup-overlay.sgpb-popup-overlay-13766.sgpb-theme-1-overlay
 com##+js(bab-defuser.js)
 devops.stackexchange.com##.js-consent-banner
+ebay.*##.s-item__sep>span>span:has-text(p):matches-css(display: inline):upward(li)
+ebay.*#$#body { background: none !important; }
+ebay.com##.s-item__detail--primary:last-child *:style(font-weight: 900 !important;color: #fff0 !important;font-size: 220px;line-height: 1.1;)
+ebay.com##.s-item__detail--primary:last-child > * > * > * > *::before:style(content: "█████";)
+ebay.com##.s-item__detail--primary:last-child > * > *:style(bottom: 1em !important;left: 0px !important;)
+ebay.com##.s-item__sep [role="text"]>span:nth-child(1):matches-css(display:inline):upward(.s-item)
+ebay.com##.s-item__sep [role="text"]>span:nth-child(4):matches-css(display:inline):upward(.s-item)
+ebay.com##.s-item__sep [role="text"]>span:nth-child(7):matches-css(display:inline):upward(.s-item)
+ebay.com##div[id^="ad_html_"]
 embx206230.apl189.me###ads
 exchange.idex.io##.hlIRgx.CookieNotice-sc-1n29zft-2
 forums.moneysavingexpert.com##.cookie-consent
@@ -20,15 +32,20 @@ frequentmiler.boardingarea.com###moove_gdpr_cookie_info_bar
 gap.com##optimizely.com
 getpocket.com##.isVisible.s1h9tfvk
 ieeexplore.ieee.org##.cc-color-override-170793312.cc-bottom.cc-theme-block.cc-type-info.cc-banner.cc-window
+libgen.is##tr[valign="top"]:contains(epub):style(opacity: 100%)
+libgen.is##tr[valign="top"]:style(opacity: 35%)
 localhost##.section-appinfo.verticalSection
 medium.com##.ib.ia.hz.ak.s.hy.ct.ld
 my.vpsie.com##.Cookie--base.Cookie--bottom
+new.optumrx.com##.wiggle:style(animation:none !important;)
 obits.nj.com##.searchBtn > span > svg > path
 old.reddit.com##.collapsed-reason:contains(blocked user):nth-ancestor(3)
 old.reddit.com##.listingsignupbar
 old.reddit.com##.subreddit:has-text(4t):nth-ancestor(1)
 old.reddit.com##.subreddit:has-text(ttt):nth-ancestor(1)
 old.reddit.com##.warn-on-unload.grayed.usertext:nth-ancestor(2)
+paireyewear.com##.swiper
+paireyewear.com##.swiper-slide-active
 psychcentral.com###modal-host
 quizpin.com###ckfqyd-blanket
 serverfault.com##.js-consent-banner
@@ -44,6 +61,7 @@ slickdeals.net##.bp-p-blueberryDealAlertCard
 slickdeals.net##.bp-p-justForYouCarouselWrapper--visible
 slickdeals.net##.bp-p-socialDealCard[data-label-promoted='1']
 slickdeals.net##.cashbackDealCardPromo:nth-ancestor(1)
+slickdeals.net##.commentsAd
 slickdeals.net##.dealCard:contains(Advertiser):nth-ancestor(1)
 slickdeals.net##.dealCardBadge--promoted:nth-ancestor(2)
 slickdeals.net##.dealCard__badge:has-text(promoted):nth-ancestor(2)
@@ -66,6 +84,7 @@ slickdeals.net##.rateUsBox
 slickdeals.net##.rateUsTab
 slickdeals.net##.sdModalOverlay
 slickdeals.net##.topContent
+slickdeals.net##.welcomeToast
 slickdeals.net##:xpath(//div[contains(@class, 'sponsorContent')]/../..)
 slickdeals.net##:xpath(//div[contains(@data-module-name, 'Trending Stores')]/..)
 smallpdf.com##.hsWwHK.sc-1bhf2s-0 > .eyjcYN.sc-1bhf2s-1
@@ -74,18 +93,28 @@ stackexchange.com##.js-consent-banner
 stackoverflow.com##.js-consent-banner
 superuser.com##.js-consent-banner
 swaggystocks.com##.cookie-notice-container
+t.17track.net###tn-UH841550083YP > .tracklist-details > .yqcr-action > .hidden-xs > .up-deals
+t.17track.net##.up-deals-img
+t.17track.net##[src="//res.17track.net/asset/imgs/shopify/ShopifyApp.gif"]
+themighty.com##.content-gate-backdrop
+themighty.com##.popup-ad
+themighty.com##.story-module
+themighty.com##body:style(overflow-y: auto !important;)
 today.yougov.com##.vwo-overlay
 travel.stackexchange.com##.js-consent-banner
 ukm.aju.airlinemeals.net###ads-fly
 usafacts.org##.jss216
 workplace.stackexchange.com##.js-consent-banner
 www.adhdmedcalc.com##.tinner
+www.adidas.com##._notification_sm8yz_10
 www.amazon.com###issuancePriceblockAmabot_feature_div
 www.amazon.com###sc-new-upsell
 www.banggood.com##body > .datacube_banner.top_mt
 www.billtrack50.com##.page-loader
 www.bol.com##.modal__overlay
 www.bol.com##.no-js--is-hidden.modal
+www.dealnews.com###dealnewsjs669944318
+www.dealnews.com##.image-placement
 www.desmoinesregister.com##.gnt_em__el.gnt_em_vp__tavp.gnt_em
 www.desmoinesregister.com##.teal-video-wrap
 www.doctorofcredit.com##.lazyload.photo.avatar-30
@@ -94,10 +123,14 @@ www.dreammachines.pl##.in.fade.modal
 www.dreammachines.pl##.in.fade.modal-backdrop
 www.ebay.com###placement101479
 www.ebay.com##.s-item:not([data-viewport*="trackableId"])
+www.ebay.com##.srp-river-answer
+www.ebay.com##.srp-river-answer--ITEMS_CAROUSEL_WITH_COLOR
 www.ebay.com##a.s-item__link[href]:matches-attr(href="/epid=403/"):upward(li.s-item)
+www.ebay.com##div.vl-atf-module-js:contains(Sponsored)
 www.ebay.com##div[aria-labelledby="s-f93c554"]:nth-ancestor(6)
 www.ebay.com##li.s-item .s-item__detail--primary span[role="text"] > span:matches-css(width: /59\.[5-9]/):upward(li.s-item):remove()
 www.ebay.com##li.s-item a.s-item__link[href]:matches-attr(href="/%3A\w{12}(&.+)?$/"):upward(li.s-item)
+www.ebay.com##li.s-item a.s-item__link[href]:matches-attr(href="/%3A\w{13}(&.+)?$/"):upward(li.s-item)
 www.economist.com##.layout-article-regwall
 www.elsevier.com##.ot-buttons-fw.ot-wo-title.bottom.otFlat
 www.elsevier.com##.ot-fade-in.onetrust-pc-dark-filter
@@ -105,8 +138,12 @@ www.evidencio.com##.outline-none.bg-opacity-40.bg-black.justify-center.z-40.left
 www.facebook.com##.x1ye3gou.x1s14bel.xn6708d.x1xy6bms.x1u8a7rm.xh8yej3.x17qophe.xixxii4.x9f619.xayqjjm.x1ey2m1c.x2bj2ny
 www.gap.com##.product-card:contains(Final Sale)
 www.glassdoor.com###ContentWallHardsell
+www.goodrx.com###suggested-savings-widget:nth-ancestor(3)
+www.goodrx.com##.re-text:has-text(Promotion disclosure):nth-ancestor(2)
 www.healthtap.com###lightboxOverlay
 www.healthtap.com##.blurredText
+www.ionos.com###bio_ep
+www.ionos.com###bio_ep_bg
 www.itv.com##.Z9Mc3.cp_cookie-dialog.cp_dialog--show.cp_dialog
 www.justanswer.com##.dqt-chat.gqa-chat-modal
 www.justanswer.com##.th-va-mobile-teaser
@@ -137,10 +174,19 @@ www.ulta.com##.CriteoProductRail
 www.washingtonpost.com##.tto-ivxscco-gtimrvnr
 www.youtube.com###Reverso_extension__popup_id
 www.zappos.com##a[aria-describedby*="sponsoredBanner"]:upward(2)
+www.zocdoc.com##div[data-test=polaris-sponsored-badge]:nth-ancestor(7)
 ||app.singular.live/token/22GX0vL745hwOoaatjAGKV?syncgraphics=0&graphicsdelay=0&aspect=&forceinteractivelayer=true&$subdocument
+||asset.17track.net/t/img/updeals/mouse.gif$image
 ||assets.getpocket.com/web-discover/_next/static/images/border.926ef9f56ecebcebf54e260654b007d9.svg$image
 ||assets.tumblr.com/pop/js/modern/async-login-wall-*.js$script,redirect=noop.js
+||daddylivehd.online/mylive/myblock.php$script
+||daddylivehd.online/mylive/myblock.php$script,1p
+||ebay.com/itemmodules/*ads_group=$xhr,1p
+||ebay.com/npk/napkinapi/v1/ticketing/redeem$xhr,1p
+||emb.apl272.me/export/ltv_popup.php$script,domain=cdn.livetv706.me
 ||github.githubassets.com/assets/command-palette-*.js$script,domain=github.com
+||picclick.com/img/crowd.gif$image
+||res.17track.net/asset/imgs/shopify/ShopifyApp.gif$image
 ||sci-hub.tw/misc/img/888.gif$image
 ||target.scene7.com/is/image/Target/GUEST_740a1946-246d-4382-acff-7af78a840974?wid=1000&hei=1000$image
 ||www.ae.com/agwa-ugp-assets/agwa
