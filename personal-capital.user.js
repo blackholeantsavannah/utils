@@ -80,9 +80,6 @@ mappings = {
   'SFYWQ': 'SFY',
 }
 
-function month_from_date(date) {
-  return date.substring(0, date.indexOf('/'));
-}
 
 function currency_str_to_float(cstr) {
   return parseFloat(cstr.replace('$', ''));
@@ -91,7 +88,7 @@ function currency_str_to_float(cstr) {
 
 window.addEventListener('load', function() {
   var holdings_text_field_id = 'bbas_holdings';
-  var bills_field_id = 'bbas_bills';
+  var bills_field_class = 'bbas_bills';
 
   function add_holdings_box() {
     if ($('.qa-ticker').length == 0) {
@@ -129,23 +126,31 @@ window.addEventListener('load', function() {
   }
 
   function add_bills_sum() {
-    if ($('#bills').length == 0 || $(`#${bills_field_id}`).length != 0) {
+    if ($('#bills').length == 0 || $(`.${bills_field_class}`).length != 0) {
       return
     }
-    var bill_sum = 0;
-    var month_num = '';
+    var today = new Date();
+
+    var bill_sums = {};
+    var bill_sums_total = 0;
 
     $('.pc-datagrid__row').each(
       function() {
-        date = $($(this).find('td')[0]).text()
+        date = new Date($($(this).find('td')[0]).text());
         balance = currency_str_to_float($($(this).find('td')[3]).text());
 
-        if (month_num.length == 0) {
-          month_num = month_from_date(date);
+        month = date.getMonth();
+        month_last_day = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+        if (!(month_last_day in bill_sums)) {
+          bill_sums[month_last_day] = 0;
         }
 
-        if (month_from_date(date) == month_num) {
-          bill_sum += balance;
+        if (date >= today || date <= month_last_day) {
+          if (date >= today && date <= month_last_day) {
+            bill_sums[month_last_day] += balance;
+          }
+          bill_sums_total += balance;
         }
       }
     )
@@ -158,14 +163,22 @@ window.addEventListener('load', function() {
       return elem
     }
 
-    // var text_field = $(`#${bills_field_id}`);
-    // $('<div>').attr('id', bills_field_id).insertBefore('#billsTable');
-    var new_row = $('<tr>').attr('id', bills_field_id).insertBefore($($('#billsTable').find('tbody').find('tr')[0]));
-    $(new_row).append(get_td(`End M ${month_num}`));
-    $(new_row).append(get_td('TOTAL'));
-    $(new_row).append(get_td());
-    $(new_row).append(get_td(`\$${bill_sum}`));
-    // $(text_field).text(`\$${bill_sum} by end of month ${month_num}`);
+    function make_bill_row(date_val, bill_sum) {
+          // var text_field = $(`#${bills_field_id}`);
+          // $('<div>').attr('id', bills_field_id).insertBefore('#billsTable');
+          var new_row = $('<tr>').attr('class', bills_field_class).insertBefore($($('#billsTable').find('tbody').find('tr')[0]));
+          $(new_row).append(get_td(`${date_val.toLocaleDateString()}`));
+          $(new_row).append(get_td('TOTAL'));
+          $(new_row).append(get_td());
+          $(new_row).append(get_td(`\$${bill_sum.toFixed(2)}`));
+          // $(text_field).text(`\$${bill_sum} by end of month ${month_num}`);
+    }
+    var bill_sum_keys = Object.keys(bill_sums).sort()
+
+    for (var i in bill_sum_keys) {
+      month_end = bill_sum_keys[i]
+      make_bill_row(new Date(month_end), bill_sums[month_end])
+    }
   }
 
   waitForElm('.qa-ticker').then(this.setInterval(add_holdings_box, 5000));
