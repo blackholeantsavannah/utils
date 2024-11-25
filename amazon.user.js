@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        amazon
-// @version     1.0.0
+// @version     1.1.0
 // @namespace   blackholeantsavannah
 // @author      blackholeantsavannah
 // @description Adds full offer links
@@ -18,6 +18,7 @@ var offer_listing_prefix = "https://www.amazon.com/gp/offer-listing/";
 var ccc_prefix = "https://www.camelcamelcamel.com/product/";
 var keepa_prefix = "https://keepa.com/#!product/1-";
 var fakespot_prefix = "https://www.fakespot.com/product/";
+var jungle_prefix = "https://www.jungle.deals/variations?ASIN=";
 
 var item_pat = /dp\/(.*?)(\/.*)?$/;
 var item_pat2 = /gp\/product\/(.*?)[\/\?]?$/;
@@ -92,6 +93,7 @@ function main() {
   var ccc_url = ccc_prefix + item_num;
   var keepa_url = keepa_prefix + item_num;
   var fakespot_url = fakespot_prefix + item_num;
+  var jungle_link = jungle_prefix + item_num;
 
   var listing_link_node = jq(
       '<a/>',
@@ -133,6 +135,16 @@ function main() {
       }
   )
 
+  var jungle_link_node = jq(
+    '<a/>',
+    {
+        id: 'jungle-link',
+        class: 'a-link-normal',
+        href: jungle_link,
+        html: 'Show jungle variations page'
+    }
+)
+
   function append(item, parent) {
       jq(parent).after(jq(item))
       return item
@@ -148,6 +160,7 @@ function main() {
   next = append_with_break(ccc_link_node, next);
   next = append_with_break(keepa_link_node, next);
   next = append_with_break(fakespot_link_node, next);
+  next = append_with_break(jungle_link_node, next);
 
   jq('.image-swatch-button').each(
     function() {
